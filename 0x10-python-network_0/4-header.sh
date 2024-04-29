@@ -1,3 +1,16 @@
 #!/bin/bash
-# Sends a GET request to the URL, and displays the body of the response
-curl -sH "X-HolbertonSchool-User-Id: 98" "${1}"
+
+# Check if URL argument is provided
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <URL>"
+    exit 1
+fi
+
+# URL provided as argument
+url=$1
+
+# Send GET request with curl, including custom header
+response=$(curl -X GET -H "X-School-User-Id: 98" "$url")
+
+# Display response body
+echo "$response"
