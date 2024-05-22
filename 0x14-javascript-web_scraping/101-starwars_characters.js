@@ -10,16 +10,31 @@ request.get(url, (error, response, body) => {
   } else {
     const content = JSON.parse(body);
     const characters = content.characters;
-    // console.log(characters);
-    for (const character of characters) {
-      request.get(character, (error, response, body) => {
-        if (error) {
-          console.log(error);
-        } else {
-          const names = JSON.parse(body);
-          console.log(names.name);
-        }
+    
+    const getCharacterName = (characterUrl) => {
+      return new Promise((resolve, reject) => {
+        request.get(characterUrl, (error, response, body) => {
+          if (error) {
+            reject(error);
+          } else {
+            const character = JSON.parse(body);
+            resolve(character.name);
+          }
+        });
       });
-    }
+    };
+
+    const fetchCharacters = async () => {
+      for (const character of characters) {
+        try {
+          const name = await getCharacterName(character);
+          console.log(name);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    fetchCharacters();
   }
 });
