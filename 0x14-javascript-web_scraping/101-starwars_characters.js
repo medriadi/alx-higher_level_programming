@@ -10,7 +10,7 @@ request.get(url, (error, response, body) => {
   } else {
     const content = JSON.parse(body);
     const characters = content.characters;
-    
+
     const getCharacterName = (characterUrl) => {
       return new Promise((resolve, reject) => {
         request.get(characterUrl, (error, response, body) => {
